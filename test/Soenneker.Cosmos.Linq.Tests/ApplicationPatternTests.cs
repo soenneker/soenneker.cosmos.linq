@@ -29,15 +29,14 @@ public sealed class ApplicationPatternTests
     }
 
     [Test]
-    public void RegisteredGeneratedEnumNullComparisonsTranslate()
+    public void GeneratedEnumNullComparisonsTranslateWithoutRegistration()
     {
-        Expression<Func<ApplicationDocument, bool>> unregistered = d => d.Source == null;
-        unregistered.WithNullSemantics().Should().BeSameAs(unregistered);
-        CosmosNullSemantics.RegisterNullComparableType<DeliverySource>();
-        CosmosNullSemantics.RegisterNullComparableType<DeliverySource>();
         AssertTranslation(d => d.Source == null, d => !d.Source.IsDefined() || d.Source.IsNull());
         AssertTranslation(d => null == d.Source, d => !d.Source.IsDefined() || d.Source.IsNull());
         AssertTranslation(d => d.Source != null, d => d.Source.IsDefined() && !d.Source.IsNull());
+        AssertTranslation(d => null != d.Source, d => d.Source.IsDefined() && !d.Source.IsNull());
+        AssertTranslation(d => d.Status! == null!, d => !d.Status.IsDefined() || d.Status.IsNull());
+        AssertTranslation(d => d.Status! != null!, d => d.Status.IsDefined() && !d.Status.IsNull());
         AssertTranslation(d => !(d.Source == null), d => !(!d.Source.IsDefined() || d.Source.IsNull()));
         Expression<Func<ApplicationDocument, bool>> nonNull = d => d.Source == DeliverySource.Manual;
         nonNull.WithNullSemantics().Should().BeSameAs(nonNull);

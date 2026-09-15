@@ -83,6 +83,23 @@ public sealed class CosmosLinqExtensionsTests
     }
 
     [Test]
+    public void ExplicitRegistrationWorksAfterAnUnrecognizedComparison()
+    {
+        Expression<Func<TestDocument, bool>> equal = d => d.Registered == null;
+        Expression<Func<TestDocument, bool>> unequal = d => d.Registered != null;
+        equal.WithNullSemantics().Should().BeSameAs(equal);
+        unequal.WithNullSemantics().Should().BeSameAs(unequal);
+
+        CosmosNullSemantics.RegisterNullComparableType<RegisteredEquality>();
+        CosmosNullSemantics.RegisterNullComparableType<RegisteredEquality>();
+
+        Expression<Func<TestDocument, bool>> expectedEqual = d => !d.Registered.IsDefined() || d.Registered.IsNull();
+        Expression<Func<TestDocument, bool>> expectedUnequal = d => d.Registered.IsDefined() && !d.Registered.IsNull();
+        equal.WithNullSemantics().ToString().Should().Be(expectedEqual.ToString());
+        unequal.WithNullSemantics().ToString().Should().Be(expectedUnequal.ToString());
+    }
+
+    [Test]
     public void RejectsNullInputs()
     {
         Action query = () => ((IQueryable<TestDocument>)null!).WithNullSemantics();
@@ -98,6 +115,15 @@ public sealed class CosmosLinqExtensionsTests
         public TestDocument? Parent { get; set; }
         public TestDocument[] Children { get; set; } = [];
         public CustomEquality? Special { get; set; }
+        public RegisteredEquality? Registered { get; set; }
+    }
+
+    public sealed class RegisteredEquality
+    {
+        public static bool operator ==(RegisteredEquality? left, RegisteredEquality? right) => ReferenceEquals(left, right);
+        public static bool operator !=(RegisteredEquality? left, RegisteredEquality? right) => !ReferenceEquals(left, right);
+        public override bool Equals(object? obj) => ReferenceEquals(this, obj);
+        public override int GetHashCode() => base.GetHashCode();
     }
 
     public sealed class CustomEquality

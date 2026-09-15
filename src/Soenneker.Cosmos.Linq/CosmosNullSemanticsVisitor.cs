@@ -44,7 +44,7 @@ internal sealed class CosmosNullSemanticsVisitor : ExpressionVisitor
             return true;
 
         return !propertyType.IsValueType && node.Method.DeclaringType == propertyType &&
-               node.Left.Type == propertyType && node.Right.Type == propertyType && CosmosNullSemantics.IsRegistered(propertyType);
+               node.Left.Type == propertyType && node.Right.Type == propertyType && CosmosNullSemantics.IsNullComparable(propertyType);
     }
 
     private static Expression CreateNullCheck(Expression property, bool isNull)
