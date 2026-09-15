@@ -34,10 +34,10 @@ Cosmos treats a missing property differently from an explicit JSON `null`.
 
 | Your filter | Rewritten filter |
 | --- | --- |
-| `d.Name == null` | `!d.Name.IsDefined() || d.Name.IsNull()` |
+| `d.Name == null` | `!d.Name.IsDefined() \|\| d.Name.IsNull()` |
 | `d.Name != null` | `d.Name.IsDefined() && !d.Name.IsNull()` |
 | `d.ReleasedAt.HasValue` | `d.ReleasedAt.IsDefined() && !d.ReleasedAt.IsNull()` |
-| `d.Source == null` | `!d.Source.IsDefined() || d.Source.IsNull()` |
+| `d.Source == null` | `!d.Source.IsDefined() \|\| d.Source.IsNull()` |
 
 `IsDefined()` checks whether the JSON property exists; `IsNull()` checks whether
 its value is JSON null. The Cosmos SDK translates these into `IS_DEFINED(...)`
