@@ -16,4 +16,7 @@
         <ProjectReference Include="..\..\src\Soenneker.Cosmos.Linq\Soenneker.Cosmos.Linq.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="AwesomeAssertions" Version="9.6.0" />
+    </ItemGroup>
 </Project>
