@@ -23,7 +23,7 @@ public static class CosmosLinqExtensions
     {
         ArgumentNullException.ThrowIfNull(query);
 
-        if (query.GetType() != CosmosQueryType<T>.Value)
+        if (!CosmosQueryType<T>.IsNativeQuery(query.GetType()))
             throw new ArgumentException("WithNullSemantics requires a native Microsoft.Azure.Cosmos LINQ query. " +
                                         "Other providers and query wrappers are not supported.", nameof(query));
 
