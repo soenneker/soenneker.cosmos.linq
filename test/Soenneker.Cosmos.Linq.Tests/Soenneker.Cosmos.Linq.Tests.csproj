@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.Gen.EnumValues" Version="4.0.64" PrivateAssets="all" />
+        <PackageReference Include="Soenneker.Gen.EnumValues" Version="11.0.65" PrivateAssets="all" />
         <PackageReference Include="Soenneker.Tests.Unit" Version="4.0.1400" />
         <PackageReference Include="TUnit" Version="1.76.28" />
     </ItemGroup>
