@@ -11,7 +11,7 @@
     <ItemGroup>
         <PackageReference Include="Soenneker.Gen.EnumValues" Version="11.0.67" PrivateAssets="all" />
         <PackageReference Include="Soenneker.Tests.Unit" Version="11.0.1437" />
-        <PackageReference Include="TUnit" Version="1.85.7" />
+        <PackageReference Include="TUnit" Version="1.86.0" />
     </ItemGroup>
 
     <ItemGroup>
